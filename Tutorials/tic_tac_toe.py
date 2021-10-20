@@ -1,6 +1,6 @@
 game = [[1, 0, 1,],
-        [1, 0, 0,],
-        [1, 2, 0,]]
+        [0, 1, 0,],
+        [1, 2, 1,]]
 
 
 def game_board(game_map, player=0, row=0, col=0, just_display=False):
@@ -17,20 +17,34 @@ def game_board(game_map, player=0, row=0, col=0, just_display=False):
     except Exception as e:
         print("Something went very wrong...", e)
 
-for col in range(len(game)):
-    check = []
+#Diagonal win
+cols = reversed(range(len(game)))
+rows = range(len(game))
+diags = []
+for col, row, in zip(cols, rows):
+    diags.append(game[row][col])
 
-    for row in game:
-        check.append(row[col])
+print(diags)
+diags = []
+for ix in range(len(game)):
+    diags.append(game[ix][ix])
+print(diags)
+
+# # Vertical win
+# for col in range(len(game)):
+#     check = []
+
+#     for row in game:
+#         check.append(row[col])
     
-    if check.count(check[0]) == len(check) and check[0] != 0:
-        print("Winner!")
+#     if check.count(check[0]) == len(check) and check[0] != 0:
+#         print("Winner!")
 
-def win(current_game):
-    for row in game:
-        print(row)
-        if row.count(row[0]) == len(row) and row[0] != 0:
-            print("Winner")
+# def win(current_game):
+#     for row in game:
+#         print(row)
+#         if row.count(row[0]) == len(row) and row[0] != 0:
+#             print("Winner")
             
 # win(game)
 
