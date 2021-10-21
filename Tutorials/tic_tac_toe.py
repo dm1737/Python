@@ -1,4 +1,6 @@
-game = [[1, 0, 1,],
+import itertools
+
+game = [[0, 0, 1,],
         [0, 1, 0,],
         [1, 2, 1,]]
 
@@ -17,38 +19,56 @@ def game_board(game_map, player=0, row=0, col=0, just_display=False):
     except Exception as e:
         print("Something went very wrong...", e)
 
-#Diagonal win
-cols = reversed(range(len(game)))
-rows = range(len(game))
-diags = []
-for col, row, in zip(cols, rows):
-    diags.append(game[row][col])
 
-print(diags)
-diags = []
-for ix in range(len(game)):
-    diags.append(game[ix][ix])
-print(diags)
-
-# # Vertical win
-# for col in range(len(game)):
-#     check = []
-
-#     for row in game:
-#         check.append(row[col])
-    
-#     if check.count(check[0]) == len(check) and check[0] != 0:
-#         print("Winner!")
-
-# def win(current_game):
-#     for row in game:
-#         print(row)
-#         if row.count(row[0]) == len(row) and row[0] != 0:
-#             print("Winner")
+def win(current_game):
+    # Horizontal win
+    for row in game:
+        print(row)
+        if row.count(row[0]) == len(row) and row[0] != 0:
+            print(f"Player {row[0]} is the winner horizontally (-)")
             
-# win(game)
+    # Diagonal win
+    diags = []
+    for col, row, in enumerate(reversed(range(len(game)))):
+        diags.append(game[row][col])
+    if diags.count(diags[0]) == len(diags) and diags[0] != 0:
+        print(f"Player {diags[0]} is the winner diagonally (/)")
 
-# game = game_board(game, player=1, row=3, col=0)
+    diags = []
+    for ix in range(len(game)):
+        diags.append(game[ix][ix])
+    if diags.count(diags[0]) == len(diags) and diags[0] != 0:
+            print(f"Player {diags[0]} is the winner diagonally (\\)")
+
+    # Vertical win
+    for col in range(len(game)):
+        check = []
+
+        for row in game:
+            check.append(row[col])
+        
+        if check.count(check[0]) == len(check) and check[0] != 0:
+            print(f"Player {check[0]} is the winner diagonally (|)")
+
+
+play = True
+players = [1, 2]
+while play:
+    game = [[0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]]
+
+    game_won = False
+    game = game_board(game, just_display=True)
+    player_choice = itertools.cycle(players)
+    while not game_won:
+        current_player = next(player_choice)
+        print(f"Current player: {current_player}")
+        column_choice = int(input("What column do you want to play? (0, 1, 2): "))
+        row_choice = int(input("What row do you want to play? (0, 1, 2): "))
+        game = game_board(game, current_player, row_choice, column_choice)
+
+game = game_board(game, player=1, row=2, col=0)
 
 
     
