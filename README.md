@@ -1,2 +1,2 @@
 # Python
-Basic python practice as refresher
+Command line tic tac toe game. 
